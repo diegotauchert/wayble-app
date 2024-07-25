@@ -13,7 +13,7 @@ export const JobListing = ({ jobs, loading }: IJobListingProps): React.ReactElem
       {loading ? (
         <Grid>
           {[...Array(5)].map((_, index) => (
-            <Grid.Col key={index} span={4}>
+            <Grid.Col key={index} span={{ base: 12, md: 4 }}>
               <Skeleton height={200} radius="md" />
             </Grid.Col>
           ))}
@@ -21,7 +21,7 @@ export const JobListing = ({ jobs, loading }: IJobListingProps): React.ReactElem
       ) : (
         <Grid>
           {jobs.map((job: JobInterface) => (
-            <Grid.Col key={job.id} span={4}>
+            <Grid.Col key={job.id} span={{ base: 12, md: 4 }}>
               <Job job={job} />
             </Grid.Col>
           ))}

@@ -1,12 +1,25 @@
-"use client"
+'use client';
 
-import { Box, Button, Container, Flex, Skeleton, Title, Text } from '@mantine/core';
+import { Box, Button, Container, Flex, Skeleton, Title, Text, Badge, Grid } from '@mantine/core';
 import { useJobs } from '@/context/JobContext';
 import { useFetchJob } from '@/hooks/useFetchJob';
 import { useSession, signIn } from 'next-auth/react';
 import { BreadCrumbs } from '@/components/widgets/Breadcrumbs';
 import { useParams, useRouter } from 'next/navigation';
-import { ChevronLeftIcon } from '@radix-ui/react-icons';
+import { ChevronLeftIcon, FaceIcon, PlusIcon, SewingPinFilledIcon } from '@radix-ui/react-icons';
+
+const LoadingSkeleton = () => {
+  return (
+    <Grid mt={10} gutter="xl">
+      <Grid.Col span={{ base: 12, md: 8 }}>
+        <Skeleton height={400} />
+      </Grid.Col>
+      <Grid.Col span={{ base: 12, md: 4 }}>
+        <Skeleton height={400} />
+      </Grid.Col>
+    </Grid>
+  )
+}
 
 export const JobDetail = (): React.ReactElement => {
   const { id } = useParams();
@@ -16,7 +29,7 @@ export const JobDetail = (): React.ReactElement => {
   const { appliedJobs, applyToJob } = useJobs();
   const { data: job, isLoading, error } = useFetchJob(Number(id));
 
-  if (isLoading) return <Skeleton height={200} />;
+  if (isLoading) return <LoadingSkeleton />;
   if (error) return <div>Error loading job details.</div>;
   if (!job) return <div>Job not found.</div>;
 
@@ -30,43 +43,55 @@ export const JobDetail = (): React.ReactElement => {
 
   return (
     <Container p={0} fluid>
-      <Flex
-        justify="space-between"
-        align="center"
-        direction="row"
-        mb={6}
-      >
-        <Flex
-          justify="flex-start"
-          align="center"
-          direction="row"
-          gap={10}
-        >
-          <Button
-            type="button"
-            variant="light"
-            size="xs"
-            onClick={() => router.back()}
-            leftSection={<ChevronLeftIcon />}
-          >
+      <Flex justify="space-between" align="center" direction="row" mb={10}>
+        <Flex justify="flex-start" align="center" direction="row" gap={10}>
+          <Button type="button" variant="light" size="xs" onClick={() => router.back()} leftSection={<ChevronLeftIcon />}>
             back
           </Button>
-          <Title order={3} mr={4} className="text-primary">Job Details</Title>
+          <Title order={3} mr={4} className="text-primary">
+            Job Details
+          </Title>
         </Flex>
         <BreadCrumbs crumb="Job Detail" />
       </Flex>
 
-      {job?.id ? 
-        <Box>
-          <Text>{job.title}</Text>
-          <Text>{job.about}</Text>
-          <Text>{session ? job.address : `${job.city}, ${job.province}`}</Text>
-
-          <Button onClick={handleApply} disabled={appliedJobs[Number(id)]}>
-            {appliedJobs[Number(id)] ? 'Already Applied' : 'Apply Now'}
-          </Button>
-        </Box>
-      : <Text>No Job Found</Text>}
+      {job?.id ? (
+        <Grid mt={10} gutter="xl">
+          <Grid.Col span={{ base: 12, md: 8 }}>
+            <Box className="grow">
+              <Flex justify="space-between" align="center" direction="row">
+                <Title order={2}>{job.title}</Title>
+                <Badge color="yellow">
+                  <Flex gap={4} justify="center" align="center">
+                    <FaceIcon width={10} /> {job.company}
+                  </Flex>
+                </Badge>
+              </Flex>
+              <Text size="sm" mt={10} className="text-gray-600 dark:text-slate-200 text-pretty">
+                {job.about}
+              </Text>
+              <Text fw={700} size="sm" mt={10} className="text-gray-800 dark:text-slate-200">
+                <SewingPinFilledIcon className="inline" />
+                {session ? job.address : `${job.city}, ${job.province}`}
+              </Text>
+            </Box>
+          </Grid.Col>
+          <Grid.Col span={{ base: 12, md: 4 }}>
+            <Box className="grow bg-gray-100 p-4">
+              <Flex direction="column" align="center" justify="center" className="h-full w-full min-h-96">
+                <Text size="xs" mb={10} className="text-center text-gray-400 leading-4">
+                  Are you interested in this job? Apply now and get a chance to work with <strong>{job.company}</strong>.
+                </Text>
+                <Button onClick={handleApply} disabled={appliedJobs[Number(id)]}>
+                  <PlusIcon className="inline" /> {appliedJobs[Number(id)] ? 'Already Applied' : 'Apply Now'}
+                </Button>
+              </Flex>
+            </Box>
+          </Grid.Col>
+        </Grid>
+      ) : (
+        <Text>No Job Found</Text>
+      )}
     </Container>
   );
 };

@@ -8,7 +8,7 @@ export const AppWrapper: React.FC<{ children: ReactNode }> = ({ children }: Read
     <main className="flex flex-col justify-center items-center mx-auto w-10/12">
       <Header />
         <Paper shadow="lg" p="xl" radius="lg" className="w-full min-h-[calc(100dvh-200px)]">
-          <Container fluid m={0} p={0}>
+          <Container fluid m={0} p={0} className="h-full">
             {children}
           </Container>
         </Paper>
