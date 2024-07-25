@@ -51,7 +51,7 @@ export const nextAuthOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      session.user = token.user as User;
+      session = token.user as Session;
       session.accessToken = token.accessToken as string;
       session.refreshToken = token.refreshToken as string;
       session.accessTokenExpires = token.accessTokenExpires as number;
@@ -60,7 +60,8 @@ export const nextAuthOptions: NextAuthOptions = {
     },
   },
   pages: {
-    error: '/api/auth/error',
+    error: '/',
     signIn: '/',
+    signOut: '/'
   },
 };
