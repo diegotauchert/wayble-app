@@ -28,9 +28,10 @@
       "@/constants/*": ["./src/constants/*"],
       "@/hooks/*": ["./src/hooks/*"],
       "@/styles/*": ["./src/styles/*"],
-      "@/interfaces/*": ["./src/interfaces/*"]
+      "@/interfaces/*": ["./src/interfaces/*"],
+      "@/data/*": ["./src/data/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/auth/[...nextauth]"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/auth/[...nextauth]"],
   "exclude": ["node_modules"]
 }

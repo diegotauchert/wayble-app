@@ -5,6 +5,7 @@ import { JobListing } from '@/components/widgets/JobListing';
 import { FetchStatusEnum, useJobs } from '@/context/JobContext';
 import { Ping } from '@/components/base/Ping';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
+import { BreadCrumbs } from '@/components/widgets/Breadcrumbs';
 
 export const JobList = (): React.ReactElement => {
   const { jobs, isLoading, error, fetchStatus, setFetchStatus } = useJobs();
@@ -16,14 +17,22 @@ export const JobList = (): React.ReactElement => {
   return (
     <Container p={0} fluid>
       <Flex
-        justify="flex-start"
+        justify="space-between"
         align="center"
         direction="row"
-        gap={5}
+        mb={6}
       >
-        <Ping />
-        <Title order={3} mb={6} mr={4} className="text-primary">Available Job Listings</Title>
-        {isLoading && <Loader size="16" />}
+        <Flex
+          justify="flex-start"
+          align="center"
+          direction="row"
+          gap={5}
+        >
+          <Ping />
+          <Title order={3} mr={4} className="text-primary">Available Job Listings</Title>
+          {isLoading && <Loader size="16" />}
+        </Flex>
+        <BreadCrumbs crumb="Job Listing" />
       </Flex>
 
       <Box>

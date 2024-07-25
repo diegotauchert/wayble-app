@@ -1,4 +1,5 @@
 'use client'
+
 import React, { ErrorInfo, ReactNode } from "react";
 import Image from 'next/image';
 import { Button } from '@mantine/core';

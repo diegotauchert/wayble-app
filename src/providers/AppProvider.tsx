@@ -6,18 +6,21 @@ import { Notifications } from '@mantine/notifications';
 import { SessionProvider } from 'next-auth/react';
 import { JobProvider } from '@/context/JobContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ErrorProvider from '@/providers/ErrorProvider';
 
 export default function AppProvider({ children }: { children: ReactNode }) {
   return (
-    <SessionProvider>
-      <QueryClientProvider client={new QueryClient()}>
-        <MantineProvider>
-          <Notifications />
-          <JobProvider>
-            {children}
-          </JobProvider>
-        </MantineProvider>
-      </QueryClientProvider>
-    </SessionProvider>
+    <ErrorProvider>
+      <SessionProvider>
+        <QueryClientProvider client={new QueryClient()}>
+          <MantineProvider>
+            <Notifications />
+            <JobProvider>
+              {children}
+            </JobProvider>
+          </MantineProvider>
+        </QueryClientProvider>
+      </SessionProvider>
+    </ErrorProvider>
   );
 }

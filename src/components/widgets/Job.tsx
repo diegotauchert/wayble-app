@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Card, Text, Badge, Button, Group, Tooltip, Flex } from '@mantine/core';
 import { JobInterface } from '@/interfaces/JobInterface';
 import { FaceIcon, ReaderIcon } from '@radix-ui/react-icons';
+import { slugify } from '@/helpers/functions';
 
 type IJobProps = {
   job: JobInterface
@@ -9,7 +10,7 @@ type IJobProps = {
 
 export const Job = ({ job }: IJobProps) => {
   const { id, title, company, about } = job;
-  const jobDetailsHref: string = `/jobs/${id}`;
+  const jobDetailsHref: string = `/jobs/${id}/${slugify(title)}`;
   
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
