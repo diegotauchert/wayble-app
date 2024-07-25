@@ -51,7 +51,7 @@ export const JobDetail = (): React.ReactElement => {
 
   return (
     <Container p={0} fluid>
-      <Flex justify="space-between" align="center" direction="row" mb={10}>
+      <Flex justify="space-between" align="center" direction={{ base: 'column', sm: 'row' }} mb={10}>
         <Flex justify="flex-start" align="center" direction="row" gap={10}>
           <Button type="button" variant="light" size="xs" onClick={() => router.back()} leftSection={<ChevronLeftIcon />}>
             back
@@ -67,8 +67,8 @@ export const JobDetail = (): React.ReactElement => {
         <Grid mt={10} gutter="xl">
           <Grid.Col span={{ base: 12, md: 8 }}>
             <Box className="grow">
-              <Flex justify="space-between" align="center" direction="row">
-                <Title order={2}>{job.title}</Title>
+              <Flex justify="space-between" align="center" direction={{ base: 'column', sm: 'row' }}>
+                <Title order={2} className="mb-3 md:mb-0">{job.title}</Title>
                 <Badge color="yellow">
                   <Flex gap={4} justify="center" align="center">
                     <FaceIcon width={10} /> {job.company}

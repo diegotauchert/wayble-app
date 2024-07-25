@@ -1,3 +1,14 @@
+## Live link
+https://wayble-app.vercel.app/
+
+```credentials to login
+email: demo@gmail.com
+password: 123456
+```
+
+## Node Version
+>= 20
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

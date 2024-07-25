@@ -21,7 +21,7 @@ export const BreadCrumbs = ({ crumb }: IBreadCrumbsProps) => {
   ));
   
   return (
-    <Box className="ml-auto">
+    <Box className="mx-auto md:ml-auto md:mr-0">
       <Breadcrumbs separator={<CaretRightIcon />} separatorMargin={3} mt="xs">{items}</Breadcrumbs>
     </Box>
   )

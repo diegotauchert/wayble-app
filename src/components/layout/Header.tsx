@@ -20,7 +20,7 @@ export const Header = (): ReactElement => {
 
   return (
     <>
-      <header className="md:flex text-center items-center justify-between pt-5 pb-4 w-full">
+      <header className="flex text-center items-center justify-between pt-5 pb-4 w-full">
         <Box>
           <Link href="/">
             <Tooltip label="Go to Home" withArrow>

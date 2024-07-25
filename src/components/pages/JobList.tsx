@@ -20,7 +20,7 @@ export const JobList = (): React.ReactElement => {
       <Flex
         justify="space-between"
         align="center"
-        direction="row"
+        direction={{ base: 'column', sm: 'row' }}
         mb={6}
       >
         <Flex
@@ -30,7 +30,7 @@ export const JobList = (): React.ReactElement => {
           gap={5}
         >
           <Ping />
-          <Title order={3} mr={4} className="text-primary">Available Job Listings</Title>
+          <Title order={3} mr={4} className="text-primary whitespace-nowrap">Available Job Listings</Title>
           {isLoading && <Loader size="16" />}
         </Flex>
         <BreadCrumbs crumb="Job Listing" />
