@@ -13,7 +13,7 @@ export default function AppProvider({ children }: { children: ReactNode }) {
     <ErrorProvider>
       <SessionProvider>
         <QueryClientProvider client={new QueryClient()}>
-          <MantineProvider>
+          <MantineProvider defaultColorScheme="light">
             <Notifications />
             <JobProvider>
               {children}

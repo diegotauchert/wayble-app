@@ -55,16 +55,18 @@ export const JobDetail = (): React.ReactElement => {
         </Flex>
         <BreadCrumbs crumb="Job Detail" />
       </Flex>
-      
-      <Box>
-        <Text>{job.title}</Text>
-        <Text>{job.about}</Text>
-        <Text>{session ? job.address : `${job.city}, ${job.province}`}</Text>
 
-        <Button onClick={handleApply} disabled={appliedJobs[Number(id)]}>
-          {appliedJobs[Number(id)] ? 'Already Applied' : 'Apply Now'}
-        </Button>
-      </Box>
+      {job?.id ? 
+        <Box>
+          <Text>{job.title}</Text>
+          <Text>{job.about}</Text>
+          <Text>{session ? job.address : `${job.city}, ${job.province}`}</Text>
+
+          <Button onClick={handleApply} disabled={appliedJobs[Number(id)]}>
+            {appliedJobs[Number(id)] ? 'Already Applied' : 'Apply Now'}
+          </Button>
+        </Box>
+      : <Text>No Job Found</Text>}
     </Container>
   );
 };
