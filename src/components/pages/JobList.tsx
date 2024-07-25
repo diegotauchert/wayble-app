@@ -1,12 +1,15 @@
 "use client"
 
-import { Title, Container, Loader, Text, Flex } from '@mantine/core';
+import { Title, Container, Loader, Text, Flex, Box, Notification } from '@mantine/core';
 import { JobListing } from '@/components/widgets/JobListing';
-import { useJobs } from '@/context/JobContext';
+import { FetchStatusEnum, useJobs } from '@/context/JobContext';
 import { Ping } from '@/components/base/Ping';
+import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 
 export const JobList = (): React.ReactElement => {
-  const { jobs, isLoading, error } = useJobs();
+  const { jobs, isLoading, error, fetchStatus, setFetchStatus } = useJobs();
+
+  const isFetchDelayed: boolean = fetchStatus === FetchStatusEnum.delayed;
   
   if (error) return <Text c="red" fw={500}>Error loading jobs: {error instanceof Error ? error.message : 'Unknown error'}</Text>;
 
@@ -19,15 +22,27 @@ export const JobList = (): React.ReactElement => {
         gap={5}
       >
         <Ping />
-        <Title order={3} mb={6} className="text-primary">Available Job Listings</Title>
+        <Title order={3} mb={6} mr={4} className="text-primary">Available Job Listings</Title>
+        {isLoading && <Loader size="16" />}
       </Flex>
-      {isLoading ? (
-        <div className="flex items-center justify-center">
-          <Loader />
-        </div>
-      ) : (
-        <JobListing jobs={jobs || []} />
-      )}
+
+      <Box>
+        {isFetchDelayed && 
+        <>
+          <Notification 
+            title="Application slower than normal" 
+            icon={<ExclamationTriangleIcon />} 
+            className="mb-6"
+            color="red"
+            onClose={() => setFetchStatus(FetchStatusEnum.acknowledged)}
+          >
+            I apologize for our application being slower than normal. Please wait a few moments while we fetch the job listings.
+          </Notification>
+        </>
+        }
+      </Box>
+      
+      <JobListing jobs={jobs || []} loading={isLoading} />
     </Container>
   );
 }
