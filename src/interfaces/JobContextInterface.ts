@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { FetchStatusEnum } from '@/context/JobContext';
+import { FetchStatusEnum } from '@/enum/FetchStatusEnum';
 import { JobInterface } from '@/interfaces/JobInterface';
 
 export interface JobContextInterface {

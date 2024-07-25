@@ -31,7 +31,8 @@
       "@/styles/*": ["./src/styles/*"],
       "@/interfaces/*": ["./src/interfaces/*"],
       "@/data/*": ["./src/data/*"],
-      "@/schemas/*": ["./src/schemas/*"]
+      "@/schemas/*": ["./src/schemas/*"],
+      "@/enum/*": ["./src/enum/*"]
     }
   },
   "include": [

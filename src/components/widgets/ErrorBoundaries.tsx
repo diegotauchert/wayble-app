@@ -19,7 +19,7 @@ export const ErrorBoundaries = ({ error, onRetry }: ErrorBoundariesProps) => {
       <h2 className="text-red-700 font-medium text-sm md:text-lg text-center mx-4">
         {'<'}We are sorry but we are experiencing instability in our application{'/>'}
       </h2>
-      <p className="bg-slate-100 font-medium px-4 py-2 text-center flex items-center gap-1 text-sm">
+      <p className="bg-red-600 text-white font-medium px-4 py-2 text-center flex items-center gap-1 text-sm rounded">
         Details: {error?.message}
       </p>
       <button 

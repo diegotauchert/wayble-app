@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Card, Text, Badge, Button, Group, Tooltip, Flex } from '@mantine/core';
+import { Card, Text, Badge, Button, Group, Tooltip, Flex, Title } from '@mantine/core';
 import { JobInterface } from '@/interfaces/JobInterface';
 import { FaceIcon, ReaderIcon } from '@radix-ui/react-icons';
 import { slugify } from '@/helpers/functions';
@@ -16,9 +16,9 @@ export const Job = ({ job }: IJobProps) => {
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Group justify="space-between" wrap="nowrap" mt="md" mb="xs">
         <Tooltip label={`Position: ${title}`} withArrow>
-          <Text fw={500} className="truncate">
+          <Title order={4} fw={700} className="truncate">
             <Link href={jobDetailsHref}>{title}</Link>
-          </Text>
+          </Title>
         </Tooltip>
 
         <Tooltip label={`Company: ${company}`} withArrow>

@@ -2,10 +2,11 @@
 
 import { Title, Container, Loader, Text, Flex, Box, Notification } from '@mantine/core';
 import { JobListing } from '@/components/widgets/JobListing';
-import { FetchStatusEnum, useJobs } from '@/context/JobContext';
+import { useJobs } from '@/context/JobContext';
 import { Ping } from '@/components/base/Ping';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { BreadCrumbs } from '@/components/widgets/Breadcrumbs';
+import { FetchStatusEnum } from '@/enum/FetchStatusEnum';
 
 export const JobList = (): React.ReactElement => {
   const { jobs, isLoading, error, fetchStatus, setFetchStatus } = useJobs();

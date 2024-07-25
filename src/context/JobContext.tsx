@@ -2,21 +2,15 @@ import { useState, createContext, useContext, ReactNode, useEffect, ReactElement
 import { useFetchJobs } from '@/hooks/useFetchJobs';
 import { JobContextInterface } from '@/interfaces/JobContextInterface';
 import { DELAYED_FETCH_TIMEOUT } from '@/constants/globalVars';
-
-export enum FetchStatusEnum {
-  loading = 'loading',
-  delayed = 'delayed',
-  acknowledged = 'acknowledged',
-  finished = 'finished',
-}
+import { FetchStatusEnum } from '@/enum/FetchStatusEnum';
 
 const JobContext = createContext<JobContextInterface | undefined>(undefined);
 
 export function JobProvider({ children }: { children: ReactNode }): ReactElement<JobContextInterface> {
   const { data: jobs, isLoading, error } = useFetchJobs();
-
   const [appliedJobs, setAppliedJobs] = useState<{ [key: number]: boolean }>({});
   const [fetchStatus, setFetchStatus] = useState<FetchStatusEnum>(FetchStatusEnum.loading);
+  console.log(appliedJobs)
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
