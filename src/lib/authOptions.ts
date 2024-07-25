@@ -60,6 +60,7 @@ export const nextAuthOptions: NextAuthOptions = {
     },
   },
   pages: {
-    error: '/',
+    error: '/api/auth/error',
+    signIn: '/',
   },
 };

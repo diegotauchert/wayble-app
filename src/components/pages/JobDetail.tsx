@@ -1,12 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import { Box, Button, Container, Flex, Skeleton, Title, Text, Badge, Grid } from '@mantine/core';
 import { useJobs } from '@/context/JobContext';
 import { useFetchJob } from '@/hooks/useFetchJob';
-import { useSession, signIn } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { BreadCrumbs } from '@/components/widgets/Breadcrumbs';
 import { useParams, useRouter } from 'next/navigation';
-import { ChevronLeftIcon, FaceIcon, PlusIcon, SewingPinFilledIcon } from '@radix-ui/react-icons';
+import { ChevronLeftIcon, FaceIcon, CheckIcon, PlusIcon, SewingPinFilledIcon } from '@radix-ui/react-icons';
+import { useDisclosure } from '@mantine/hooks';
+import { Dialog } from '@/components/base/Dialog';
+import { LoginForm } from '@/components/widgets/LoginForm';
+import { Modal } from '@mantine/core';
 
 const LoadingSkeleton = () => {
   return (
@@ -24,6 +29,8 @@ const LoadingSkeleton = () => {
 export const JobDetail = (): React.ReactElement => {
   const { id } = useParams();
   const router = useRouter();
+  const [opened, { open, close }] = useDisclosure(false);
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
 
   const { data: session } = useSession();
   const { appliedJobs, applyToJob } = useJobs();
@@ -35,9 +42,10 @@ export const JobDetail = (): React.ReactElement => {
 
   const handleApply = () => {
     if (!session) {
-      signIn();
+      open()
     } else {
       applyToJob(Number(id));
+      setSuccessModalOpen(true)
     }
   };
 
@@ -79,11 +87,17 @@ export const JobDetail = (): React.ReactElement => {
           <Grid.Col span={{ base: 12, md: 4 }}>
             <Box className="grow bg-gray-100 p-4">
               <Flex direction="column" align="center" justify="center" className="h-full w-full min-h-96">
-                <Text size="xs" mb={10} className="text-center text-gray-400 leading-4">
-                  Are you interested in this job? Apply now and get a chance to work with <strong>{job.company}</strong>.
-                </Text>
-                <Button onClick={handleApply} disabled={appliedJobs[Number(id)]}>
-                  <PlusIcon className="inline" /> {appliedJobs[Number(id)] ? 'Already Applied' : 'Apply Now'}
+                {!appliedJobs[Number(id)] && 
+                  <Text size="xs" mb={10} className="text-center text-gray-400 leading-4">
+                    Are you interested in this job? Apply now and get a chance to work with <strong>{job.company}</strong>.
+                  </Text>
+                }
+                <Button 
+                  type="button"
+                  onClick={handleApply} 
+                  disabled={appliedJobs[Number(id)]}
+                >
+                  {appliedJobs[Number(id)] ? <><CheckIcon className="inline" /> Already Applied</> : <><PlusIcon className="inline" /> Apply Now</>}
                 </Button>
               </Flex>
             </Box>
@@ -92,6 +106,29 @@ export const JobDetail = (): React.ReactElement => {
       ) : (
         <Text>No Job Found</Text>
       )}
+      
+      {!session && 
+        <Dialog 
+          openModal={open} 
+          closeModal={close} 
+          isOpen={opened} 
+          title="Login Authentication"
+        >
+          <LoginForm />
+        </Dialog>
+      }
+
+      <Modal
+        opened={successModalOpen}
+        onClose={() => setSuccessModalOpen(false)}
+        title=""
+        centered
+      >
+        <CheckIcon className="rounded-full mx-auto bg-primary text-white" width={60} height={60} />
+        <Text className="text-lg text-primary text-center font-semibold my-5">
+          You’ve applied to <strong>{job.company}</strong> to work as a <strong>{job.title}</strong>.
+        </Text>
+      </Modal>
     </Container>
   );
 };

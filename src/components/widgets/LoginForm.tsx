@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signIn } from 'next-auth/react';
 import { Button, TextInput, PasswordInput, Flex, Alert } from '@mantine/core';
 import { loginSchema, LoginFormSchema } from '@/schemas/login.schema';
-import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
+import { ExclamationTriangleIcon, LockOpen1Icon } from '@radix-ui/react-icons';
 
 export const LoginForm = () => {
   const [error, setError] = useState<string | null>(null);
@@ -41,7 +41,11 @@ export const LoginForm = () => {
           {...register('password')}
           error={errors.password?.message}
         />
-        <Button type="submit" fullWidth>
+        <Button 
+          type="submit" 
+          fullWidth
+          leftSection={<LockOpen1Icon />}
+        >
           Login
         </Button>
       </Flex>

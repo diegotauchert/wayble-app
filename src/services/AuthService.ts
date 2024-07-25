@@ -11,9 +11,9 @@ export class AuthService {
 
     return {
       ...user,
-      accessToken: 'your-access-token', // Fake token
-      refreshToken: 'your-refresh-token', // Fake token
-      accessTokenExpires: Date.now() + 60 * 60 * ACCESS_TOKEN_EXPIRES_IN_MINUTES // 1 hour expiry time
+      accessToken: 'your-access-token',
+      refreshToken: 'your-refresh-token',
+      accessTokenExpires: Date.now() + 60 * 60 * ACCESS_TOKEN_EXPIRES_IN_MINUTES
     };
   }
 

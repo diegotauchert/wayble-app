@@ -36,7 +36,7 @@ export function JobProvider({ children }: { children: ReactNode }): ReactElement
 
   const applyToJob = (jobId: number) => {
     setAppliedJobs((prev) => ({ ...prev, [jobId]: true }));
-  };
+  }
 
   return (
     <JobContext.Provider value={{ jobs, isLoading, error, applyToJob, appliedJobs, fetchStatus, setFetchStatus }}>
