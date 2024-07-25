@@ -1,27 +1,20 @@
-"use client"
-
-import { createContext, useContext, useState } from 'react';
-
-interface Job {
-  id: number;
-  title: string;
-  about: string;
-  address: string;
-  city: string;
-  province: string;
-}
+import { useState, createContext, useContext, ReactNode } from 'react';
+import { useFetchJobs } from '@/hooks/useFetchJobs'; // Adjust the import path
+import { JobInterface } from '@/interfaces/JobInterface';
 
 interface JobContextType {
-  jobs: Job[];
-  setJobs: React.Dispatch<React.SetStateAction<Job[]>>;
-  appliedJobs: { [key: number]: boolean };
+  jobs: JobInterface[] | undefined;
+  isLoading: boolean;
+  error: unknown;
   applyToJob: (jobId: number) => void;
+  appliedJobs: { [key: number]: boolean };
 }
 
 const JobContext = createContext<JobContextType | undefined>(undefined);
 
-export function JobProvider({ children }: { children: React.ReactNode }) {
-  const [jobs, setJobs] = useState<Job[]>([]);
+export function JobProvider({ children }: { children: ReactNode }) {
+  const { data: jobs, isLoading, error } = useFetchJobs();
+
   const [appliedJobs, setAppliedJobs] = useState<{ [key: number]: boolean }>({});
 
   const applyToJob = (jobId: number) => {
@@ -29,7 +22,7 @@ export function JobProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <JobContext.Provider value={{ jobs, setJobs, appliedJobs, applyToJob }}>
+    <JobContext.Provider value={{ jobs, isLoading, error, applyToJob, appliedJobs }}>
       {children}
     </JobContext.Provider>
   );
@@ -37,8 +30,9 @@ export function JobProvider({ children }: { children: React.ReactNode }) {
 
 export const useJobs = () => {
   const context = useContext(JobContext);
+  
   if (!context) {
     throw new Error('useJobs must be used within a JobProvider');
   }
   return context;
-};
+}

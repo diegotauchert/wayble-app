@@ -26,7 +26,9 @@
       "@/http/*": ["./src/services/http/*"],
       "@/helpers/*": ["./src/helpers/*"],
       "@/constants/*": ["./src/constants/*"],
-      "@/hooks/*": ["./src/hooks/*"]
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/styles/*": ["./src/styles/*"],
+      "@/interfaces/*": ["./src/interfaces/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/auth/[...nextauth]"],
