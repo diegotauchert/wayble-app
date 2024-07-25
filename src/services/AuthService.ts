@@ -1,24 +1,24 @@
-import { HttpConnect } from "@/http/HttpConnect";
+import { ACCESS_TOKEN_EXPIRES_IN_MINUTES } from '@/constants/globalVars';
+import { users } from "@/data/users";
 
 export class AuthService {
   static async login(userName: string, password: string): Promise<any> {
-    return (await HttpConnect.post('/access/token/', {
-      email: userName,
-      password
-    })).data
+    const user = users.find(
+      (user) => user.email === userName && user.password === password
+    );
+
+    if (!user) return null;
+
+    return {
+      ...user,
+      accessToken: 'your-access-token', // Fake token
+      refreshToken: 'your-refresh-token', // Fake token
+      accessTokenExpires: Date.now() + 60 * 60 * ACCESS_TOKEN_EXPIRES_IN_MINUTES // 1 hour expiry time
+    };
   }
+
 
   static async refreshToken(token: string): Promise<any> {
-    return (await HttpConnect.post('/access/token/refresh/', {
-      refresh: token
-    })).data
-  }
-
-  static async whoami(token: string): Promise<any> {
-    return (await HttpConnect.get('/access/whoami', {
-      headers: {
-        Authorization: 'Bearer ' + token
-      }
-    })).data
+    return {}
   }
 }
