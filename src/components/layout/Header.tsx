@@ -3,16 +3,19 @@
 import { ReactElement } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button, Box, Tooltip, Flex, Popover, Text } from '@mantine/core';
-import { BellIcon, LockClosedIcon, SunIcon, GearIcon, ExclamationTriangleIcon, ExitIcon } from '@radix-ui/react-icons';
+import { Button, Box, Tooltip, Flex, Popover, Text, Title, List, Divider } from '@mantine/core';
+import { BellIcon, LockClosedIcon, SunIcon, GearIcon, ExclamationTriangleIcon, ExitIcon, CheckIcon } from '@radix-ui/react-icons';
 import { Dialog } from '@/components/base/Dialog';
 import { LoginForm } from '@/components/widgets/LoginForm';
 import { useDisclosure } from '@mantine/hooks';
 import { useSession, signOut } from 'next-auth/react';
+import { useJobs } from '@/context/JobContext';
+import { slugify } from '@/helpers/functions';
 
 export const Header = (): ReactElement => {
   const [opened, { open, close }] = useDisclosure(false);
   const { data: session } = useSession();
+  const { jobs, appliedJobs } = useJobs();
 
   const handleSignOut = async () => {
     await signOut({ callbackUrl: '/' });
@@ -56,9 +59,46 @@ export const Header = (): ReactElement => {
                   </Button>
                 </Popover.Target>
                 <Popover.Dropdown>
-                  <Text size="xs" py={14} className="text-center text-gray-600">
-                    <ExclamationTriangleIcon className="inline mr-1" width={11} /> No notifications to show
-                  </Text>
+                  {appliedJobs?.length > 0 ? 
+                    <Box>
+                      <Title order={6} mb={16}><BellIcon className="inline" /> Applied Jobs</Title>
+                      <List>
+                        {appliedJobs.map((appliedJob) => {
+                          const job = jobs?.find(({ id }) => id === appliedJob.id);
+                          const jobDetailsHref: string = job ? `/jobs/${job?.id}/${slugify(job?.title)}` : '/';
+
+                          return job && (
+                            <>
+                              <List.Item key={job.id}>
+                                <Flex
+                                  gap="xs"
+                                  justify="flex-start"
+                                  align="center"
+                                  direction="row"
+                                >
+                                  <CheckIcon className="inline mr-1" width={11} /> 
+                                  <Text size="xs" className="text-gray-700">
+                                    <Link href={jobDetailsHref}>
+                                      <Text size="sm" fw={700}>{job.company}</Text> 
+                                    </Link>
+
+                                    <Link href={jobDetailsHref}>
+                                      {job.title}
+                                    </Link>
+                                  </Text>
+                                </Flex>
+                              </List.Item>
+                              <Divider my="md" className="last:hidden" />
+                            </>
+                          )
+                        })}
+                      </List>
+                    </Box>
+                  :
+                    <Text size="xs" py={14} className="text-center text-gray-600">
+                      <ExclamationTriangleIcon className="inline mr-1" width={11} /> No notifications to show
+                    </Text>
+                  }
                 </Popover.Dropdown>
               </Popover>
             </Box>

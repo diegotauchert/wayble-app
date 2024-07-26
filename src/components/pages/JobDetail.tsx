@@ -49,6 +49,8 @@ export const JobDetail = (): React.ReactElement => {
     }
   };
 
+  const isApplied: boolean = appliedJobs?.some(job => job.id === Number(id) && job.applied);
+
   return (
     <Container p={0} fluid>
       <Flex justify="space-between" align="center" direction={{ base: 'column', sm: 'row' }} mb={10}>
@@ -87,7 +89,7 @@ export const JobDetail = (): React.ReactElement => {
           <Grid.Col span={{ base: 12, md: 4 }}>
             <Box className="grow bg-gray-100 p-4">
               <Flex direction="column" align="center" justify="center" className="h-full w-full min-h-96">
-                {!appliedJobs[Number(id)] && 
+                {!isApplied && 
                   <Text size="xs" mb={10} className="text-center text-gray-400 leading-4">
                     Are you interested in this job? Apply now and get a chance to work with <strong>{job.company}</strong>.
                   </Text>
@@ -95,9 +97,9 @@ export const JobDetail = (): React.ReactElement => {
                 <Button 
                   type="button"
                   onClick={handleApply} 
-                  disabled={appliedJobs[Number(id)]}
+                  disabled={isApplied}
                 >
-                  {appliedJobs[Number(id)] ? <><CheckIcon className="inline" /> Already Applied</> : <><PlusIcon className="inline" /> Apply Now</>}
+                  {isApplied ? <><CheckIcon className="inline" /> Already Applied</> : <><PlusIcon className="inline" /> Apply Now</>}
                 </Button>
               </Flex>
             </Box>

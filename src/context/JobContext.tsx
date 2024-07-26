@@ -1,16 +1,28 @@
-import { useState, createContext, useContext, ReactNode, useEffect, ReactElement } from 'react';
+import { useState, createContext, useCallback, useContext, ReactNode, useEffect, ReactElement } from 'react';
 import { useFetchJobs } from '@/hooks/useFetchJobs';
-import { JobContextInterface } from '@/interfaces/JobContextInterface';
+import { JobContextInterface, AppliedJob } from '@/interfaces/JobContextInterface';
 import { DELAYED_FETCH_TIMEOUT } from '@/constants/globalVars';
 import { FetchStatusEnum } from '@/enum/FetchStatusEnum';
 
-const JobContext = createContext<JobContextInterface | undefined>(undefined);
+const JobContext = createContext<JobContextInterface>({} as JobContextInterface);
 
-export function JobProvider({ children }: { children: ReactNode }): ReactElement<JobContextInterface> {
+export function JobProvider({ children }: { children: ReactNode }): ReactElement {
   const { data: jobs, isLoading, error } = useFetchJobs();
-  const [appliedJobs, setAppliedJobs] = useState<{ [key: number]: boolean }>({});
+  const [appliedJobs, setAppliedJobs] = useState<AppliedJob[]>([]);
   const [fetchStatus, setFetchStatus] = useState<FetchStatusEnum>(FetchStatusEnum.loading);
-  console.log(appliedJobs)
+  
+  useEffect(() => {
+    const storedAppliedJobs = localStorage.getItem('appliedJobs');
+    if (storedAppliedJobs) {
+      setAppliedJobs(JSON.parse(storedAppliedJobs));
+    }
+  }, []);
+
+  useEffect(() => {
+    if(appliedJobs?.length){
+      localStorage.setItem('appliedJobs', JSON.stringify(appliedJobs));
+    }
+  }, [appliedJobs]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -28,9 +40,14 @@ export function JobProvider({ children }: { children: ReactNode }): ReactElement
     }
   }, [isLoading]);
 
-  const applyToJob = (jobId: number) => {
-    setAppliedJobs((prev) => ({ ...prev, [jobId]: true }));
-  }
+  const applyToJob = useCallback((jobId: number) => {
+    setAppliedJobs((prev) => {
+      const updated = prev.some(job => job.id === jobId) 
+        ? prev.map(job => job.id === jobId ? { ...job, applied: true } : job)
+        : [...prev, { id: jobId, applied: true }];
+      return updated;
+    });
+  }, []);
 
   return (
     <JobContext.Provider value={{ jobs, isLoading, error, applyToJob, appliedJobs, fetchStatus, setFetchStatus }}>
