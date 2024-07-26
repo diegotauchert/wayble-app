@@ -17,7 +17,7 @@ const LoadingSkeleton = () => {
   return (
     <Grid mt={10} gutter="xl">
       <Grid.Col span={{ base: 12, md: 8 }}>
-        <Skeleton height={400} />
+        <Skeleton height={400} data-testid="loading-skeleton" />
       </Grid.Col>
       <Grid.Col span={{ base: 12, md: 4 }}>
         <Skeleton height={400} />

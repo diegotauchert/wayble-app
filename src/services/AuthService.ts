@@ -17,7 +17,6 @@ export class AuthService {
     };
   }
 
-
   static async refreshToken(token: string): Promise<any> {
     return {}
   }

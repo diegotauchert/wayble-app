@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout//Footer';
+import { Footer } from '@/components/layout/Footer';
 import { Container, Paper } from '@mantine/core';
 
 export const AppWrapper: React.FC<{ children: ReactNode }> = ({ children }: Readonly<{ children: ReactNode }>) => {

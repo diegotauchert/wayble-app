@@ -1,6 +1,7 @@
 module.exports = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   testEnvironment: "jest-environment-jsdom",
+  injectGlobals: true,
   moduleNameMapper: {
     '\\.(css|less|scss)$': 'identity-obj-proxy',
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
@@ -24,7 +25,6 @@ module.exports = {
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   preset: "ts-jest",
-  testEnvironment: "node",
   extensionsToTreatAsEsm: [".ts", ".tsx"],
   testTimeout: 20000,
   coverageDirectory: "jest-coverage",
