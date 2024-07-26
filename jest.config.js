@@ -1,27 +1,14 @@
+const { pathsToModuleNameMapper } = require("ts-jest");
+const { compilerOptions } = require("./tsconfig.json");
+
 module.exports = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   testEnvironment: "jest-environment-jsdom",
-  injectGlobals: true,
-  moduleNameMapper: {
-    '\\.(css|less|scss)$': 'identity-obj-proxy',
-    '^@/components/(.*)$': '<rootDir>/src/components/$1',
-    '^@/context/(.*)$': '<rootDir>/src/context/$1',
-    '^@/lib/(.*)$': '<rootDir>/src/lib/$1',
-    '^@/providers/(.*)$': '<rootDir>/src/providers/$1',
-    '^@/services/(.*)$': '<rootDir>/src/services/$1',
-    '^@/http/(.*)$': '<rootDir>/src/services/http/$1',
-    '^@/helpers/(.*)$': '<rootDir>/src/helpers/$1',
-    '^@/constants/(.*)$': '<rootDir>/src/constants/$1',
-    '^@/hooks/(.*)$': '<rootDir>/src/hooks/$1',
-    '^@/styles/(.*)$': '<rootDir>/src/styles/$1',
-    '^@/interfaces/(.*)$': '<rootDir>/src/interfaces/$1',
-    '^@/data/(.*)$': '<rootDir>/src/data/$1',
-    '^@/schemas/(.*)$': '<rootDir>/src/schemas/$1',
-    '^@/enum/(.*)$': '<rootDir>/src/enum/$1',
-  },
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: "<rootDir>" }),
+  moduleDirectories: ["node_modules"],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
+    '^.+\\.(t|j)sx?$': '@swc/jest',
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   preset: "ts-jest",

@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const Ping = () => {
   return (
     <span className="relative flex h-3 w-3 -mt-1">
