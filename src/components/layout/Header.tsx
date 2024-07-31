@@ -14,12 +14,13 @@ import { slugify } from '@/helpers/functions';
 
 export const Header = (): ReactElement => {
   const [opened, { open, close }] = useDisclosure(false);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
   const { jobs, appliedJobs } = useJobs();
 
   const handleSignOut = async () => {
     await signOut({ callbackUrl: '/' });
-  };
+  }
 
   return (
     <>
@@ -126,30 +127,33 @@ export const Header = (): ReactElement => {
             >
               <GearIcon />
             </Button>
-
-            {session ?
-              <Button
-                type="button"
-                variant="primary"
-                justify="center"
-                bg="red"
-                size="sm"
-                leftSection={<ExitIcon width={14} />}
-                onClick={handleSignOut}
-              >
-                logout
-              </Button>
-            :
-              <Button
-                type="button"
-                variant="primary"
-                justify="center"
-                size="sm"
-                leftSection={<LockClosedIcon width={14} />}
-                onClick={open}
-              >
-                login
-              </Button>
+            {status !== "loading" &&
+              <>
+                {session ?
+                  <Button
+                    type="button"
+                    variant="primary"
+                    justify="center"
+                    bg="red"
+                    size="sm"
+                    leftSection={<ExitIcon width={14} />}
+                    onClick={handleSignOut}
+                  >
+                    logout
+                  </Button>
+                :
+                  <Button
+                    type="button"
+                    variant="primary"
+                    justify="center"
+                    size="sm"
+                    leftSection={<LockClosedIcon width={14} />}
+                    onClick={open}
+                  >
+                    login
+                  </Button>
+                }
+              </>
             }
           </Flex>
         </Box>
