@@ -3,6 +3,7 @@ import { Card, Text, Badge, Button, Group, Tooltip, Flex, Title } from '@mantine
 import { JobInterface } from '@/interfaces/JobInterface';
 import { FaceIcon, ReaderIcon } from '@radix-ui/react-icons';
 import { slugify } from '@/helpers/functions';
+import { useLanguage } from '@/hooks/useLanguage'
 
 type IJobProps = {
   job: JobInterface
@@ -10,6 +11,8 @@ type IJobProps = {
 
 export const Job = ({ job }: IJobProps) => {
   const { id, title, company, about } = job;
+  const { FormattedLang, lang } = useLanguage();
+
   const jobDetailsHref: string = `/jobs/${id}/${slugify(title)}`;
   
   return (
@@ -40,7 +43,7 @@ export const Job = ({ job }: IJobProps) => {
         </Link>
       </Text>
       
-      <Tooltip label="See Job Details" withArrow>
+      <Tooltip label={lang('text.seeMore')} withArrow>
         <Button 
           component="a"
           color="blue" 
@@ -51,7 +54,7 @@ export const Job = ({ job }: IJobProps) => {
           leftSection={<ReaderIcon />}
           className="transition duration-500"
         >
-          See Job Details
+          <FormattedLang id="text.seeMore" />
         </Button>
       </Tooltip>
     </Card>

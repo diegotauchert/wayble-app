@@ -7,10 +7,11 @@ import { Ping } from '@/components/base/Ping';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { BreadCrumbs } from '@/components/widgets/Breadcrumbs';
 import { FetchStatusEnum } from '@/enum/FetchStatusEnum';
+import { useLanguage } from '@/hooks/useLanguage';
 
 export const JobList = (): React.ReactElement => {
   const { jobs, isLoading, error, fetchStatus, setFetchStatus } = useJobs();
-
+  const { FormattedLang, lang } = useLanguage();
   const isFetchDelayed: boolean = fetchStatus === FetchStatusEnum.delayed;
   
   if (error) return <Text c="red" fw={500}>Error loading jobs: {error instanceof Error ? error.message : 'Unknown error'}</Text>;
@@ -30,10 +31,12 @@ export const JobList = (): React.ReactElement => {
           gap={5}
         >
           <Ping />
-          <Title order={3} mr={4} className="text-primary whitespace-nowrap">Available Job Listings</Title>
+          <Title order={3} mr={4} className="text-primary whitespace-nowrap">
+            <FormattedLang id="title.jobsListing" />
+          </Title>
           {isLoading && <Loader size="16" />}
         </Flex>
-        <BreadCrumbs crumb="Job Listing" />
+        <BreadCrumbs crumb={lang('breadcrumb.listing')} />
       </Flex>
 
       <Box>

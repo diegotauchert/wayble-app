@@ -20,7 +20,7 @@ export const configureAxiosWithToken = async (): Promise<AxiosInstance> => {
       }
 
       // Delay the request by 3 seconds, only for testing purposes
-      // await debouncePromise(() => Promise.resolve(), 120000);
+      // await debouncePromise(() => Promise.resolve(), 20000);
 
       return config;
     },

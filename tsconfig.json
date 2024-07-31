@@ -33,6 +33,7 @@
       "@/interfaces/*": ["./src/interfaces/*"],
       "@/data/*": ["./src/data/*"],
       "@/schemas/*": ["./src/schemas/*"],
+      "@/locales/*": ["./src/locales/*"],
       "@/enum/*": ["./src/enum/*"]
     }
   },

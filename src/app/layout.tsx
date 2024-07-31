@@ -19,6 +19,12 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.png" />
+        <meta name="theme-color" content='#FFFFFF' />
+        <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
+        <meta property="og:title" content="Wayble - Jobs & Resources for International Students" />
+        <meta property="og:description" content="Diverse Early Talent Recruitment · Employer Learning Hub · Meet Candidates Now. Contact Send us an email at: hello@joinwayble.com" />
+        <meta property="og:image" content="/images/logo.png" />
+        <link rel="canonical" href="https://wayble-app.vercel.app" />
       </head>
 
       <body
