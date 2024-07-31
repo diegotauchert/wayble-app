@@ -1,4 +1,6 @@
-export const jobs = [
+import { JobInterfaceAPI } from "@/interfaces/JobInterface";
+
+export const jobs: JobInterfaceAPI[] = [
   { 
     id: 1, 
     title: 'Full-Stack Developer', 

@@ -10,28 +10,28 @@ type IJobProps = {
 }
 
 export const Job = ({ job }: IJobProps) => {
-  const { id, title, company, about } = job;
+  const { id, job_name, company_name, about_us } = job;
   const { FormattedLang, lang } = useLanguage();
 
-  const jobDetailsHref: string = `/jobs/${id}/${slugify(title)}`;
+  const jobDetailsHref: string = `/jobs/${id}/${slugify(job_name)}`;
   
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Group justify="space-between" wrap="nowrap" mt="md" mb="xs">
-        <Tooltip label={`Position: ${title}`} withArrow>
+        <Tooltip label={`Position: ${job_name}`} withArrow>
           <Title order={4} fw={700} className="truncate">
-            <Link href={jobDetailsHref}>{title}</Link>
+            <Link href={jobDetailsHref}>{job_name}</Link>
           </Title>
         </Tooltip>
 
-        <Tooltip label={`Company: ${company}`} withArrow>
+        <Tooltip label={`Company: ${company_name}`} withArrow>
           <Badge color="yellow">
             <Flex 
               gap={4} 
               justify="center"
               align="center"
             >
-              <FaceIcon width={10} /> {company}
+              <FaceIcon width={10} /> {company_name}
             </Flex>
           </Badge>
         </Tooltip>
@@ -39,7 +39,7 @@ export const Job = ({ job }: IJobProps) => {
       
       <Text size="sm" c="dimmed" className="line-clamp-3">
         <Link href={jobDetailsHref} className="hover:text-gray-700 transition duration-500">
-          {about}
+          {about_us}
         </Link>
       </Text>
       

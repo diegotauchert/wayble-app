@@ -34,6 +34,7 @@
       "@/data/*": ["./src/data/*"],
       "@/schemas/*": ["./src/schemas/*"],
       "@/locales/*": ["./src/locales/*"],
+      "@/mappers/*": ["./src/mappers/*"],
       "@/enum/*": ["./src/enum/*"]
     }
   },

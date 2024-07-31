@@ -70,15 +70,15 @@ export const JobDetail = (): React.ReactElement => {
           <Grid.Col span={{ base: 12, md: 8 }}>
             <Box className="grow">
               <Flex justify="space-between" align="center" direction={{ base: 'column', sm: 'row' }}>
-                <Title order={2} className="mb-3 md:mb-0">{job.title}</Title>
+                <Title order={2} className="mb-3 md:mb-0">{job.job_name}</Title>
                 <Badge color="yellow">
                   <Flex gap={4} justify="center" align="center">
-                    <FaceIcon width={10} /> {job.company}
+                    <FaceIcon width={10} /> {job.company_name}
                   </Flex>
                 </Badge>
               </Flex>
               <Text size="sm" mt={10} className="text-gray-600 dark:text-slate-200 text-pretty">
-                {job.about}
+                {job.about_us}
               </Text>
               <Text fw={700} size="sm" mt={10} className="text-gray-800 dark:text-slate-200">
                 <SewingPinFilledIcon className="inline" />
@@ -91,7 +91,7 @@ export const JobDetail = (): React.ReactElement => {
               <Flex direction="column" align="center" justify="center" className="h-full w-full min-h-96">
                 {!isApplied && 
                   <Text size="xs" mb={10} className="text-center text-gray-400 leading-4">
-                    Are you interested in this job? Apply now and get a chance to work with <strong>{job.company}</strong>.
+                    Are you interested in this job? Apply now and get a chance to work with <strong>{job.company_name}</strong>.
                   </Text>
                 }
                 <Button 
@@ -128,7 +128,7 @@ export const JobDetail = (): React.ReactElement => {
       >
         <CheckIcon className="rounded-full mx-auto bg-primary text-white" width={60} height={60} />
         <Text className="text-lg text-primary text-center font-semibold my-5">
-          You’ve applied to <strong>{job.company}</strong> to work as a <strong>{job.title}</strong>.
+          You’ve applied to <strong>{job.company_name}</strong> to work as a <strong>{job.job_name}</strong>.
         </Text>
       </Modal>
     </Container>

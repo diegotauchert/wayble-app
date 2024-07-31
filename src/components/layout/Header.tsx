@@ -65,7 +65,7 @@ export const Header = (): ReactElement => {
                       <List>
                         {appliedJobs.map((appliedJob) => {
                           const job = jobs?.find(({ id }) => id === appliedJob.id);
-                          const jobDetailsHref: string = job ? `/jobs/${job?.id}/${slugify(job?.title)}` : '/';
+                          const jobDetailsHref: string = job ? `/jobs/${job?.id}/${slugify(job?.job_name)}` : '/';
 
                           return job && (
                             <>
@@ -79,11 +79,11 @@ export const Header = (): ReactElement => {
                                   <CheckIcon className="inline mr-1" width={11} /> 
                                   <Text size="xs" className="text-gray-700">
                                     <Link href={jobDetailsHref}>
-                                      <Text size="sm" fw={700}>{job.company}</Text> 
+                                      <Text size="sm" fw={700}>{job.company_name}</Text> 
                                     </Link>
 
                                     <Link href={jobDetailsHref}>
-                                      {job.title}
+                                      {job.job_name}
                                     </Link>
                                   </Text>
                                 </Flex>
