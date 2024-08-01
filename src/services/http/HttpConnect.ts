@@ -1,5 +1,6 @@
 import { debouncePromise } from '@/lib/utils';
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
+import { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
 
 export const configureAxiosWithToken = async (): Promise<AxiosInstance> => {
@@ -13,7 +14,7 @@ export const configureAxiosWithToken = async (): Promise<AxiosInstance> => {
 
   configAxios.interceptors.request.use(
     async (config) => {
-      const session = await getSession();
+      const session: Session = await getSession();
   
       if (session?.accessToken) {
         config.headers["Authorization"] = `Bearer ${session.accessToken}`;

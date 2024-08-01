@@ -47,6 +47,7 @@ export const nextAuthOptions: NextAuthOptions = {
       if (token?.user) {
         session.user = token.user as UserType
       }
+      session.accessToken = token.accessToken as string
 
       return session
     }
