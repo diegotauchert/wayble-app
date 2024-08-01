@@ -1,20 +1,13 @@
-import { ACCESS_TOKEN_EXPIRES_IN_MINUTES } from '@/constants/globalVars';
 import { users } from "@/data/users";
+import { UserInterface } from "@/interfaces/UserInterface";
 
 export class AuthService {
-  static async login(userName: string, password: string): Promise<any> {
-    const user = users.find(
-      (user) => user.email === userName && user.password === password
-    );
+  static async login(userName: string, password: string): Promise<UserInterface | null> {
+    const user = users.find((user: UserInterface) => user.email === userName && user.password === password)
+    if(!user) return null
 
-    if (!user) return null;
-
-    return {
-      ...user,
-      accessToken: 'your-access-token',
-      refreshToken: 'your-refresh-token',
-      accessTokenExpires: Date.now() + 60 * 60 * ACCESS_TOKEN_EXPIRES_IN_MINUTES
-    };
+    delete user.password
+    return user
   }
 
   static async refreshToken(token: string): Promise<any> {

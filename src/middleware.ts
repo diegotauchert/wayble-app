@@ -1,23 +1,34 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+import { getToken } from 'next-auth/jwt';
+import { UserTypeEnum } from '@/enum/UserTypeEnum';
+import { User } from 'next-auth';
 
-export function middleware(request: NextRequest) {
-  const requestHeaders = new Headers(request.headers)
+export async function middleware(request: NextRequest) {
+  const token = await getToken({ req: request });
 
-  requestHeaders.set('Content-Security-Policy', 'upgrade-insecure-requests')
+  if (!token) {
+    if (request.nextUrl.pathname.startsWith('/admin')) {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+    return NextResponse.next();
+  }
 
-  return NextResponse.next({
-    headers: requestHeaders,
-    request: {
-      headers: requestHeaders,
-    },
-  })
+  const userRole = (token.user as User).role as UserTypeEnum;
 
-  // return NextResponse.next()
+  if (userRole === UserTypeEnum.admin) {
+    return NextResponse.next();
+  }
+
+  if (userRole === UserTypeEnum.user && request.nextUrl.pathname.startsWith('/admin')) {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    '/jobs/:path*'
+    '/:path*'
   ],
-}
+};

@@ -1,12 +1,17 @@
-export const users = [
+import { UserTypeEnum } from "@/enum/UserTypeEnum";
+import { UserInterface } from "@/interfaces/UserInterface";
+
+export const users: UserInterface[] = [
   { 
     id: 1, 
-    email: 'demo@gmail.com', 
-    password: '123456'
+    email: 'user@gmail.com', 
+    password: '123456',
+    role: UserTypeEnum.user
   },
   { 
     id: 2, 
-    email: 'diego@gmail.com', 
-    password: '123456789'
+    email: 'admin@gmail.com', 
+    password: '123456',
+    role: UserTypeEnum.admin
   }
-];
+]

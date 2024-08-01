@@ -2,7 +2,12 @@
 https://wayble-app.vercel.app/
 
 ```credentials to login
-email: demo@gmail.com
+Regular User:
+email: user@gmail.com
+password: 123456
+
+Admin User:
+email: admin@gmail.com
 password: 123456
 ```
 

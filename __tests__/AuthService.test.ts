@@ -13,20 +13,7 @@ describe('AuthService', () => {
       const user = users[0];
       const result = await AuthService.login(user.email, user.password);
 
-      expect(result).toEqual({
-        ...user,
-        accessToken: 'your-access-token',
-        refreshToken: 'your-refresh-token',
-        accessTokenExpires: expect.any(Number)
-      });
-    });
-  });
-
-  describe('refreshToken', () => {
-    it('should return an empty object', async () => {
-      const result = await AuthService.refreshToken('your-refresh-token');
-
-      expect(result).toEqual({});
+      expect(result).toEqual(user);
     });
   });
 });

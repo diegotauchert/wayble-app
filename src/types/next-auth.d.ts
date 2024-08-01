@@ -1,25 +1,18 @@
-import NextAuth, { DefaultUser } from 'next-auth'
+import NextAuth from 'next-auth'
+import { UserTypeEnum } from "@/enum/UserTypeEnum";
 
 declare module 'next-auth' {
-  interface User extends DefaultUser {
-    id: number
+  interface User {
+    id: id
     email: string
-    accessToken: string
-    refreshToken: string
-    accessTokenExpires: number
+    role: UserTypeEnum
   }
 
   interface Session {
-    user: User
-    accessToken: string
-    refreshToken: string
-    accessTokenExpires: number
-  }
-  
-  interface JWT {
-    user: User
-    accessToken: string
-    refreshToken: string
-    accessTokenExpires: number
+    user: {
+      id: number
+      email: string
+      role: UserTypeEnum
+    }
   }
 }

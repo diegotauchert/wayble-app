@@ -1,10 +1,10 @@
 "use client";
 
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button, Box, Tooltip, Flex, Popover, Text, Title, List, Divider } from '@mantine/core';
-import { BellIcon, LockClosedIcon, SunIcon, GearIcon, ExclamationTriangleIcon, ExitIcon, CheckIcon } from '@radix-ui/react-icons';
+import { BellIcon, LockClosedIcon, SunIcon, GearIcon, ExclamationTriangleIcon, ExitIcon, CheckIcon, PersonIcon } from '@radix-ui/react-icons';
 import { Dialog } from '@/components/base/Dialog';
 import { LoginForm } from '@/components/widgets/LoginForm';
 import { useDisclosure } from '@mantine/hooks';
@@ -19,9 +19,9 @@ export const Header = (): ReactElement => {
   const { jobs, appliedJobs } = useJobs();
 
   const handleSignOut = async () => {
-    await signOut({ callbackUrl: '/' });
+    await signOut();
   }
-
+  
   return (
     <>
       <header className="flex text-center items-center justify-between pt-5 pb-4 w-full">
@@ -69,8 +69,8 @@ export const Header = (): ReactElement => {
                           const jobDetailsHref: string = job ? `/jobs/${job?.id}/${slugify(job?.job_name)}` : '/';
 
                           return job && (
-                            <>
-                              <List.Item key={job.id}>
+                            <React.Fragment key={job.id}>
+                              <List.Item>
                                 <Flex
                                   gap="xs"
                                   justify="flex-start"
@@ -90,7 +90,7 @@ export const Header = (): ReactElement => {
                                 </Flex>
                               </List.Item>
                               <Divider my="md" className="last:hidden" />
-                            </>
+                            </React.Fragment>
                           )
                         })}
                       </List>
@@ -130,6 +130,13 @@ export const Header = (): ReactElement => {
             {status !== "loading" &&
               <>
                 {session ?
+                  <>
+                  <Box className="text-right">
+                    <Flex align="center" gap="2" className="text-xs font-light text-gray-800">
+                      <PersonIcon width={13} />{session.user.email}
+                    </Flex>
+                    <Text className="text-xs font-light text-gray-600">{session.user.role}</Text>
+                  </Box>
                   <Button
                     type="button"
                     variant="primary"
@@ -141,6 +148,7 @@ export const Header = (): ReactElement => {
                   >
                     logout
                   </Button>
+                  </>
                 :
                   <Button
                     type="button"

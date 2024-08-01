@@ -1,6 +1,13 @@
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { NextAuthOptions, Session, User } from 'next-auth';
+import { NextAuthOptions } from 'next-auth';
 import { AuthService } from '@/services/AuthService';
+import { UserTypeEnum } from "@/enum/UserTypeEnum";
+
+type UserType = {
+  id: number
+  email: string
+  role: UserTypeEnum
+}
 
 export const nextAuthOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -14,25 +21,14 @@ export const nextAuthOptions: NextAuthOptions = {
         userName: { label: 'Email', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials): Promise<User | null> {
+      async authorize(credentials: Record<"userName" | "password", string>): Promise<UserType | null> {
         if (!credentials?.userName || !credentials?.password) {
           return null;
         }
 
         try {
           const user = await AuthService.login(credentials.userName, credentials.password);
-
-          if (user) {
-            return {
-              id: user.id,
-              email: user.email,
-              accessToken: user.accessToken,
-              refreshToken: user.refreshToken,
-              accessTokenExpires: user.accessTokenExpires
-            };
-          } else {
-            throw new Error('User not found or incorrect password');
-          }
+          return user || null
         } catch (error) {
           throw new Error('Invalid credentials. Login failed.');
         }
@@ -42,22 +38,18 @@ export const nextAuthOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.accessToken = user.accessToken;
-        token.refreshToken = user.refreshToken;
-        token.accessTokenExpires = user.accessTokenExpires;
-        token.user = user;
+        token.user = { ...user }
       }
 
-      return token;
+      return token
     },
     async session({ session, token }) {
-      session = token.user as Session;
-      session.accessToken = token.accessToken as string;
-      session.refreshToken = token.refreshToken as string;
-      session.accessTokenExpires = token.accessTokenExpires as number;
+      if (token?.user) {
+        session.user = token.user as UserType
+      }
 
-      return session;
-    },
+      return session
+    }
   },
   pages: {
     error: '/',

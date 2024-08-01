@@ -1,6 +1,8 @@
 {
   "title.jobsListing": "Listagem de vagas disponíveis",
+  "title.addJob": "Adicionar nova vaga",
   "text.copyright": "Todos os direitos reservados",
   "text.seeMore": "Veja detalhes da vaga",
-  "breadcrumb.listing": "Vagas"
+  "breadcrumb.listing": "Vagas",
+  "breadcrumb.new": "Nova Vaga"
 }

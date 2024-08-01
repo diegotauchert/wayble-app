@@ -1,6 +1,8 @@
 {
   "title.jobsListing": "Available Job Listings",
+  "title.addJob": "Add new job",
   "text.copyright": "All rights reserved",
   "text.seeMore": "See Job Details",
-  "breadcrumb.listing": "Job Listing"
+  "breadcrumb.listing": "Job Listing",
+  "breadcrumb.new": "New Job"
 }
